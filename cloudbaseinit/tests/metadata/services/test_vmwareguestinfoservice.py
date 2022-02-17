@@ -187,3 +187,14 @@ class VMwareGuestInfoServiceTest(unittest.TestCase):
         mock_get_guestinfo_value.return_value = "no encoding"
         self.assertRaises(exception.CloudbaseInitException,
                           self._service._get_guest_data, 'fake_key')
+
+    @ddt.data(({}, None),
+              ({'version': 2}, None),
+              ({'version': 1}, None))
+    @ddt.unpack
+    def test_get_network(self, network_data, expected_return_value):
+        self._service._meta_data = {
+            "network": network_data
+        }
+        config = self._service.get_network_details_v2()
+        self.assertEqual(config, expected_return_value)
