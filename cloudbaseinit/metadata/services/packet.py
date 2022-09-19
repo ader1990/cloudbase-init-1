@@ -92,6 +92,8 @@ class PacketService(base.BaseHTTPMetadataService):
 
     def get_user_pwd_encryption_key(self):
         phone_home_url = self._get_phone_home_url()
+        if not phone_home_url:
+            return None
         key_url = requests.compat.urljoin('%s/' % phone_home_url, "key")
         return self._get_cache_data(key_url, decode=True)
 
