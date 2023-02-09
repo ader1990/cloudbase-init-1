@@ -307,7 +307,10 @@ class NoCloudConfigDriveService(baseconfigdrive.BaseConfigDriveService):
         if not raw_ssh_keys:
             return []
 
-        return [raw_ssh_keys[key].get('openssh-key') for key in raw_ssh_keys]
+        if isinstance(raw_ssh_keys, list):
+            return raw_ssh_keys
+        else:
+            return [raw_ssh_keys[k].get('openssh-key') for k in raw_ssh_keys]
 
     def get_network_details(self):
         debian_net_config = self._get_meta_data().get('network-interfaces')
