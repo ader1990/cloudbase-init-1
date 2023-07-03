@@ -10,7 +10,7 @@ jobs:
       matrix:
         python-version: ["3.10","3.11"]
         architecture: [x64]
-        cloud: [openstack,cloudstack,ovf,empty,vmwareguest,maas]
+        cloud: [openstack,cloudstack,ovf,empty,vmwareguest]
 
     steps:
     - name: Checkout cloudbase-init master repo
