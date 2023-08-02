@@ -31,6 +31,9 @@ jobs:
         try {
             & "../bin/mkisofs.exe" -o "../../cloudbase-init-config-drive.iso" -ignore-error -ldots -allow-lowercase -allow-multidot -l -publisher "cbsl" -quiet -J -r -V "config-2" "cloudbase-init-metadata" 2>&1 | %{ "$_" }
         } catch {}
+        try {
+            & "../bin/mkisofs.exe" -o "../../cloudbase-init-config-drive-nocloud.iso" -ignore-error -ldots -allow-lowercase -allow-multidot -l -publisher "cbsl" -quiet -J -r -V "cidata" "cloudbase-init-metadata" 2>&1 | %{ "$_" }
+        } catch {}
     - name: Install local dependencies
       shell: powershell
       run: |
@@ -51,6 +54,8 @@ jobs:
       run: |
         $Erroractionpreference = "Continue"
         Mount-DiskImage -ImagePath (Resolve-Path ./cloudbase-init-config-drive.iso) | Out-Null
+        Mount-DiskImage -ImagePath (Resolve-Path ./cloudbase-init-config-drive-nocloud.iso) | Out-Null
+        Get-PSDRIVE
         mkdir "./metadata" | Out-Null
         cp -recurse -force "$((Get-DiskImage (Resolve-Path './cloudbase-init-config-drive.iso') | Get-Volume).DriveLetter):\*" "./metadata";
         if (Test-path ".\metadata\openstack\latest\network_data.json.template") {
