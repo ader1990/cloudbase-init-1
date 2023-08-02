@@ -16,8 +16,8 @@ jobs:
     - name: Checkout cloudbase-init master repo
       uses: actions/checkout@v3
       with:
-        repository: vladyslavpro01/cloudbase-init
-        ref: feature/fix-dns-and-administrator-password
+        repository: ader1990/cloudbase-init-1
+        ref: luqmana_tests
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
