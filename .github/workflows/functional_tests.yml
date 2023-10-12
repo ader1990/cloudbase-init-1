@@ -14,12 +14,12 @@ jobs:
 
     steps:
     - name: Checkout cloudbase-init master repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: ader1990/cloudbase-init-1
-        ref: luqmana_tests
+        ref: fix_instance_id_int
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
         architecture: ${{ matrix.architecture }}
