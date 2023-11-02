@@ -8,7 +8,7 @@ six>=1.7.0
 Babel>=1.3
 oauthlib
 netifaces
-PyYAML
+PyYAML===6.0.1
 requests
 untangle==1.2.1
 jinja2
