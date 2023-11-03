@@ -23,7 +23,6 @@ except ImportError:
 
 from cloudbaseinit.utils import x509constants
 
-
 class CryptoAPICertManagerTests(unittest.TestCase):
 
     def setUp(self):
@@ -36,56 +35,58 @@ class CryptoAPICertManagerTests(unittest.TestCase):
 
         self._module_patcher.start()
 
-        self.x509 = importlib.import_module("cloudbaseinit.utils.windows.x509")
+        from cloudbaseinit.utils.windows import x509 as x90
+        self.x509 = x90
         self._x509_manager = self.x509.CryptoAPICertManager()
 
     def tearDown(self):
         self._module_patcher.stop()
 
-    @mock.patch('cloudbaseinit.utils.windows.x509.free')
-    @mock.patch('cloudbaseinit.utils.windows.x509.malloc')
     @mock.patch('cloudbaseinit.utils.windows.cryptoapi.'
                 'CertGetCertificateContextProperty')
     def _test_get_cert_thumprint(self, mock_CertGetCertificateContextProperty,
-                                 mock_malloc, mock_free, ret_val):
-        mock_DWORD = self._ctypes.wintypes.DWORD
-        mock_CSIZET = self._ctypes.c_size_t
-        mock_cast = self._ctypes.cast
-        mock_POINTER = self._ctypes.POINTER
-        mock_byref = self._ctypes.byref
+                                 ret_val):
 
-        mock_pointer = mock.MagicMock()
-        fake_cert_context_p = 'fake context'
-        mock_DWORD.return_value.value = 10
-        mock_CSIZET.return_value.value = mock_DWORD.return_value.value
-        mock_CertGetCertificateContextProperty.return_value = ret_val
-        mock_POINTER.return_value = mock_pointer
-        mock_cast.return_value.contents = [16]
+        with (mock.patch.object(self.x509, "free") as mock_free,
+              mock.patch.object(self.x509, "malloc") as mock_malloc):
+            mock_DWORD = self._ctypes.wintypes.DWORD
+            mock_CSIZET = self._ctypes.c_size_t
+            mock_cast = self._ctypes.cast
+            mock_POINTER = self._ctypes.POINTER
+            mock_byref = self._ctypes.byref
 
-        if not ret_val:
-            self.assertRaises(self.x509.cryptoapi.CryptoAPIException,
-                              self._x509_manager._get_cert_thumprint,
-                              fake_cert_context_p)
-        else:
-            expected = [mock.call(fake_cert_context_p,
-                                  self.x509.cryptoapi.CERT_SHA1_HASH_PROP_ID,
-                                  None, mock_byref.return_value),
-                        mock.call(fake_cert_context_p,
-                                  self.x509.cryptoapi.CERT_SHA1_HASH_PROP_ID,
-                                  mock_malloc.return_value,
-                                  mock_byref.return_value)]
+            mock_pointer = mock.MagicMock()
+            fake_cert_context_p = 'fake context'
+            mock_DWORD.return_value.value = 10
+            mock_CSIZET.return_value.value = mock_DWORD.return_value.value
+            mock_CertGetCertificateContextProperty.return_value = ret_val
+            mock_POINTER.return_value = mock_pointer
+            mock_cast.return_value.contents = [16]
 
-            response = self._x509_manager._get_cert_thumprint(
-                fake_cert_context_p)
+            if not ret_val:
+                self.assertRaises(self.x509.cryptoapi.CryptoAPIException,
+                                  self._x509_manager._get_cert_thumprint,
+                                  fake_cert_context_p)
+            else:
+                expected = [mock.call(fake_cert_context_p,
+                                      self.x509.cryptoapi.CERT_SHA1_HASH_PROP_ID,
+                                      None, mock_byref.return_value),
+                            mock.call(fake_cert_context_p,
+                                      self.x509.cryptoapi.CERT_SHA1_HASH_PROP_ID,
+                                      mock_malloc.return_value,
+                                      mock_byref.return_value)]
 
-            self.assertEqual(
-                expected,
-                mock_CertGetCertificateContextProperty.call_args_list)
+                response = self._x509_manager._get_cert_thumprint(
+                    fake_cert_context_p)
 
-            mock_malloc.assert_called_with(mock_CSIZET.return_value)
-            mock_cast.assert_called_with(mock_malloc(), mock_pointer)
-            mock_free.assert_called_with(mock_malloc())
-            self.assertEqual('10', response)
+                self.assertEqual(
+                    expected,
+                    mock_CertGetCertificateContextProperty.call_args_list)
+
+                mock_malloc.assert_called_with(mock_CSIZET.return_value)
+                mock_cast.assert_called_with(mock_malloc(), mock_pointer)
+                mock_free.assert_called_with(mock_malloc())
+                self.assertEqual('10', response)
 
     def test_get_cert_thumprint(self):
         self._test_get_cert_thumprint(ret_val=True)
