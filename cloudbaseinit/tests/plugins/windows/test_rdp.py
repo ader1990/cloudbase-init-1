@@ -22,6 +22,7 @@ except ImportError:
 
 from cloudbaseinit import conf as cloudbaseinit_conf
 from cloudbaseinit.plugins.common import base
+from cloudbaseinit.plugins.windows import rdp
 from cloudbaseinit.tests import testutils
 
 CONF = cloudbaseinit_conf.CONF
@@ -42,8 +43,6 @@ class RDPPluginTest(unittest.TestCase):
         )
         patcher.start()
         self.addCleanup(patcher.stop)
-        rdp = importlib.import_module(
-            "cloudbaseinit.plugins.windows.rdp")
         self.rdp_settings = rdp.RDPSettingsPlugin()
         self.rdp_post = rdp.RDPPostCertificateThumbprintPlugin()
         self.snatcher = testutils.LogSnatcher(MODPATH)
