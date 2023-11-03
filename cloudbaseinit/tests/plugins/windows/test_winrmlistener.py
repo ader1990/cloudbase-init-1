@@ -23,6 +23,7 @@ except ImportError:
 from cloudbaseinit import conf as cloudbaseinit_conf
 from cloudbaseinit.plugins.common import base
 from cloudbaseinit.tests import testutils
+from cloudbaseinit.plugins.windows import winrmlistener
 
 CONF = cloudbaseinit_conf.CONF
 
@@ -46,8 +47,6 @@ class ConfigWinRMListenerPluginTests(unittest.TestCase):
         self._module_patcher.start()
         self._winreg_mock = self._moves_mock.winreg
 
-        winrmlistener = importlib.import_module('cloudbaseinit.plugins.'
-                                                'windows.winrmlistener')
         self._winrmlistener = winrmlistener.ConfigWinRMListenerPlugin()
 
     def tearDown(self):

@@ -23,6 +23,7 @@ except ImportError:
 from cloudbaseinit import conf as cloudbaseinit_conf
 from cloudbaseinit import constant
 from cloudbaseinit.plugins.common import base
+from cloudbaseinit.plugins.windows import bootconfig
 from cloudbaseinit.tests import testutils
 
 CONF = cloudbaseinit_conf.CONF
@@ -47,7 +48,6 @@ class BootConfigPluginTest(unittest.TestCase):
         )
         patcher.start()
         self.addCleanup(patcher.stop)
-        bootconfig = importlib.import_module(MODPATH)
         self.boot_policy_plugin = bootconfig.BootStatusPolicyPlugin()
         self.bcd_config = bootconfig.BCDConfigPlugin()
         self.snatcher = testutils.LogSnatcher(MODPATH)

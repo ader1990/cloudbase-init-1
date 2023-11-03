@@ -21,6 +21,7 @@ except ImportError:
     import mock
 
 from cloudbaseinit.plugins.common import base
+from cloudbaseinit.plugins.windows import licensing
 from cloudbaseinit.tests import testutils
 
 
@@ -36,7 +37,6 @@ class WindowsLicensingPluginTests(unittest.TestCase):
                 'wmi': self._wmi_mock})
         self.snatcher = testutils.LogSnatcher(MODPATH)
         self._module_patcher.start()
-        licensing = importlib.import_module(MODPATH)
         self._licensing = licensing.WindowsLicensingPlugin()
 
     def tearDown(self):
