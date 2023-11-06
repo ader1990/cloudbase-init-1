@@ -15,6 +15,6 @@ jinja2
 cryptography
 pywin32;sys_platform=="win32"
 comtypes;sys_platform=="win32"
-pymi;sys_platform=="win32"
+pymi@git+https://github.com/cloudbase/pymi@master;sys_platform=="win32"
 wmi;sys_platform=="win32"
 tzlocal;sys_platform=="win32"
