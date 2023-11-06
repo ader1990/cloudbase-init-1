@@ -1,6 +1,8 @@
 import sys
 import unittest.mock as mock
+from oslotest import mock_fixture
 
+mock_fixture.patch_mock_module()
 
 sys.modules["ctypes"] = mock.MagicMock()
 sys.modules["ctypes.wintypes"] = mock.MagicMock()
