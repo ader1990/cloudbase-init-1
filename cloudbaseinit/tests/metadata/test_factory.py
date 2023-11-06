@@ -31,8 +31,9 @@ class MetadataServiceFactoryTests(unittest.TestCase):
                                    ret_value=mock.MagicMock(),
                                    load_exception=False):
         mock_load_class.side_effect = ret_value
+        fake_class = "fake_class"
         if load_exception:
-            mock_load_class()().load.side_effect = Exception
+            mock_load_class(fake_class)().load.side_effect = Exception
             with self.assertRaises(exception.CloudbaseInitException):
                 factory.get_metadata_service()
             return
@@ -41,7 +42,7 @@ class MetadataServiceFactoryTests(unittest.TestCase):
                               factory.get_metadata_service)
         else:
             response = factory.get_metadata_service()
-            self.assertEqual(mock_load_class()(), response)
+            self.assertEqual(mock_load_class(fake_class)(), response)
 
     def test_get_metadata_service(self):
         self._test_get_metadata_service()

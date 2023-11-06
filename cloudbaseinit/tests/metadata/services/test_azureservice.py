@@ -57,12 +57,14 @@ class AzureServiceTest(unittest.TestCase):
     def tearDown(self):
         self._module_patcher.stop()
 
+    @mock.patch('cloudbaseinit.utils.network.get_local_ip')
     @mock.patch('time.sleep')
     @mock.patch('socket.inet_ntoa')
     @mock.patch('cloudbaseinit.utils.dhcp.get_dhcp_options')
     def _test_get_wire_server_endpoint_address(self, mock_dhcp,
                                                mock_inet_ntoa,
                                                mock_time_sleep,
+                                               mock_get_local_ip,
                                                dhcp_option=None):
         mock_dhcp.return_value = dhcp_option
         if not dhcp_option:
