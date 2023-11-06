@@ -1642,15 +1642,15 @@ class WindowsUtils(base.BaseOSUtils):
         return sysnative_dir_exists
 
     def _get_system_dir(self, sysnative=True):
-        """Return Windows system directory with compatibility support.
+        '''Return Windows system directory with compatibility support.
 
         Depending on the interpreter bits and platform architecture,
         the return value may vary between
-        C:\Windows\(System32|SysWOW64|Sysnative).
+        C:\\Windows\\(System32|SysWOW64|Sysnative).
         Note that "Sysnative" is just an alias (doesn't really exist on disk).
 
         More info about this can be found in documentation.
-        """
+        '''
         if sysnative and self.check_sysnative_dir_exists():
             return self.get_sysnative_dir()
         if not sysnative and self._is_64bit_arch():
