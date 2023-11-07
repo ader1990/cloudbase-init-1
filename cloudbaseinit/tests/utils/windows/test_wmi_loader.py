@@ -32,7 +32,7 @@ class WMILoaderTests(unittest.TestCase):
             wmi_loader = importlib.import_module(MODPATH)
             self.assertEqual(mock.sentinel.wmi, wmi_loader.wmi())
 
-    @mock.patch('imp.load_source')
+    @mock.patch('importlib.util.spec_from_file_location')
     @mock.patch('os.path.isfile')
     def test_load_legacy_wmi(self, mock_isfile, mock_load_source):
         mock_isfile.return_value = True

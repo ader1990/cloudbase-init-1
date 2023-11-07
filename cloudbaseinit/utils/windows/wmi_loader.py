@@ -12,7 +12,7 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-import imp
+import importlib
 import os
 import site
 
@@ -41,4 +41,4 @@ def wmi():
         if wmi_path is None:
             raise exception.ItemNotFoundException("wmi module not found")
 
-        return imp.load_source("wmi", wmi_path)
+        return importlib.util.spec_from_file_location("wmi", wmi_path)
