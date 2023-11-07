@@ -43,7 +43,6 @@ class TestVDSStorageManager(unittest.TestCase):
         self._vds_storage_manager = self.vds_store.VDSStorageManager()
         self._vds_storage_manager.ctypes = mock.MagicMock()
 
-
     def test_enumerate(self):
         query = mock.Mock()
         items = [1, 2, 3]

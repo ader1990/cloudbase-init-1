@@ -44,8 +44,9 @@ class TestTimezone(unittest.TestCase):
              'win32security': self._mock_win32security})
         self._module_patcher.start()
         self._mock_moves.winreg = self._mock_winreg
-    
-        with mock.patch('cloudbaseinit.utils.windows.privilege.acquire_privilege'):
+
+        with mock.patch('cloudbaseinit.utils.windows.privilege.'
+                        'acquire_privilege'):
             self._timezone_module = importlib.import_module(
                 'cloudbaseinit.utils.windows.timezone')
         self._timezone_module.WindowsError = FakeWindowsError

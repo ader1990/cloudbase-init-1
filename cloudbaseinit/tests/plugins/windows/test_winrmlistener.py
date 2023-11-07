@@ -44,21 +44,9 @@ class ConfigWinRMListenerPluginTests(unittest.TestCase):
         self._winreg_mock = self._moves_mock.winreg
 
         with (mock.patch('cloudbaseinit.utils.windows.security.'
-            'WindowsSecurityUtils'),
-    mock.patch('cloudbaseinit.plugins.windows.winrmlistener.'
-                'ConfigWinRMListenerPlugin._configure_winrm_listener'),
-    mock.patch('cloudbaseinit.plugins.windows.winrmlistener.'
-                'ConfigWinRMListenerPlugin._check_uac_remote_restrictions'),
-    mock.patch('cloudbaseinit.plugins.windows.winrmlistener.'
-                'ConfigWinRMListenerPlugin._get_winrm_listeners_config'),
-    mock.patch('cloudbaseinit.osutils.factory.get_os_utils'),
-    mock.patch('cloudbaseinit.plugins.windows.winrmlistener.'
-                'ConfigWinRMListenerPlugin._check_winrm_service'),
-    mock.patch('cloudbaseinit.utils.windows.winrmconfig.WinRMConfig'),
-    mock.patch('cloudbaseinit.plugins.windows.winrmlistener'
-        '.ConfigWinRMListenerPlugin._create_self_signed_certificate')):
+                         'WindowsSecurityUtils')):
             winrmlistener = importlib.import_module('cloudbaseinit.plugins.'
-                                                'windows.winrmlistener')
+                                                    'windows.winrmlistener')
         self._winrmlistener = winrmlistener.ConfigWinRMListenerPlugin()
 
     def tearDown(self):
