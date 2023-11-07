@@ -1646,7 +1646,7 @@ class WindowsUtils(base.BaseOSUtils):
 
         Depending on the interpreter bits and platform architecture,
         the return value may vary between
-        C:\Windows\(System32|SysWOW64|Sysnative).
+        C:\\Windows\\(System32|SysWOW64|Sysnative).
         Note that "Sysnative" is just an alias (doesn't really exist on disk).
 
         More info about this can be found in documentation.
