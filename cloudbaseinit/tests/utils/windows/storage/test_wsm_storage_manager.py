@@ -27,6 +27,7 @@ class TestWSMStorageManager(unittest.TestCase):
 
     def setUp(self):
         self._mock_ctypes = mock.MagicMock()
+        self._mock_ctypes.GetLastError = mock.MagicMock()
         self.mock_wmi = mock.MagicMock()
         self._moves_mock = mock.MagicMock()
         self._winreg_mock = self._moves_mock.winreg

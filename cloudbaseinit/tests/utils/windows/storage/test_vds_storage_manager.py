@@ -25,8 +25,10 @@ class TestVDSStorageManager(unittest.TestCase):
 
     def setUp(self):
         self._ctypes_mock = mock.MagicMock()
+        self._ctypes_mock.GetLastError = mock.MagicMock()
+        self._ctypes_mock = mock.MagicMock()
         self._comtypes_mock = mock.MagicMock()
-        self._ctypes_mock.util = ctypes.util
+        self._ctypes_mock.util = mock.MagicMock()
 
         self._module_patcher = mock.patch.dict(
             'sys.modules',
@@ -34,12 +36,13 @@ class TestVDSStorageManager(unittest.TestCase):
              'ctypes': self._ctypes_mock})
 
         self._module_patcher.start()
-
-        self.vds_store = importlib.import_module(
-            "cloudbaseinit.utils.windows.storage.vds_storage_manager")
-        self._vds_storage_manager = self.vds_store.VDSStorageManager()
-
         self.addCleanup(self._module_patcher.stop)
+        with mock.patch('cloudbaseinit.utils.windows.vds.IVdsPack'):
+            self.vds_store = importlib.import_module(
+                "cloudbaseinit.utils.windows.storage.vds_storage_manager")
+        self._vds_storage_manager = self.vds_store.VDSStorageManager()
+        self._vds_storage_manager.ctypes = mock.MagicMock()
+
 
     def test_enumerate(self):
         query = mock.Mock()

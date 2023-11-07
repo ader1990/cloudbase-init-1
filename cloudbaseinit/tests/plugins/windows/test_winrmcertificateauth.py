@@ -42,9 +42,20 @@ class ConfigWinRMCertificateAuthPluginTests(unittest.TestCase):
 
         self._winreg_mock = self._moves_mock.winreg
 
-        self.winrmcert = importlib.import_module(
-            'cloudbaseinit.plugins.windows.winrmcertificateauth')
+        with (mock.patch('cloudbaseinit.plugins.windows.winrmcertificateauth'
+                '.ConfigWinRMCertificateAuthPlugin._get_credentials'),
+    mock.patch('cloudbaseinit.utils.windows.winrmconfig.WinRMConfig'),
+    mock.patch('cloudbaseinit.utils.windows.x509.CryptoAPICertManager.'
+                'import_cert'),
+    mock.patch('cloudbaseinit.osutils.factory.get_os_utils'),
+    mock.patch('cloudbaseinit.utils.windows.security.WindowsSecurityUtils'
+                '.set_uac_remote_restrictions'),
+    mock.patch('cloudbaseinit.utils.windows.security.WindowsSecurityUtils'
+               '.get_uac_remote_restrictions')):
+            self.winrmcert = importlib.import_module(
+                'cloudbaseinit.plugins.windows.winrmcertificateauth')
         self._certif_auth = self.winrmcert.ConfigWinRMCertificateAuthPlugin()
+        self._certif_auth.WindowsError = FakeWindowsError
 
     def tearDown(self):
         self._module_patcher.stop()
