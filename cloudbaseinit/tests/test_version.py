@@ -14,8 +14,8 @@
 
 import importlib
 import unittest
+import unittest.mock as mock
 
-import mock
 import six
 
 from cloudbaseinit.tests import testutils
