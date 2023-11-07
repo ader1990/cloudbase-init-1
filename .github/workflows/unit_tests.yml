@@ -26,3 +26,7 @@ jobs:
       shell: bash
       run: |
         stestr run --exclude-list faling.tests --random
+    - name: Run Cloudbase-Init unit tests
+      shell: bash
+      run: |
+        stestr run --isolated
