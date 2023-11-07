@@ -18,10 +18,7 @@ import tempfile
 import textwrap
 import unittest
 
-try:
-    import unittest.mock as mock
-except ImportError:
-    import mock
+import unittest.mock as mock
 
 from cloudbaseinit import exception
 from cloudbaseinit.metadata.services import base as metadata_services_base
