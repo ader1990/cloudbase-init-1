@@ -92,8 +92,9 @@ class TestWindowsUtils(testutils.CloudbaseInitTestBase):
 
         exception.ctypes.GetLastError = mock.MagicMock()
         exception.ctypes.FormatError = mock.MagicMock()
-        with mock.patch("cloudbaseinit.utils.windows.disk.GUID"):
-            self.windows_utils = importlib.import_module(module_path)
+        with (mock.patch("cloudbaseinit.utils.windows.disk.GUID"),
+            mock.patch("cloudbaseinit.utils.windows.network.get_adapter_addresses")):
+                self.windows_utils = importlib.import_module(module_path)
 
         self._winreg_mock = self._moves_mock.winreg
         self._windll_mock = self._ctypes_mock.windll
