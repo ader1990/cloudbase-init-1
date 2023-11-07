@@ -55,7 +55,6 @@ class ConfigWinRMCertificateAuthPluginTests(unittest.TestCase):
             self.winrmcert = importlib.import_module(
                 'cloudbaseinit.plugins.windows.winrmcertificateauth')
         self._certif_auth = self.winrmcert.ConfigWinRMCertificateAuthPlugin()
-        self._certif_auth.WindowsError = FakeWindowsError
 
     def tearDown(self):
         self._module_patcher.stop()

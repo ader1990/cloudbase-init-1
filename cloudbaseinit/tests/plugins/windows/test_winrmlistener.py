@@ -43,7 +43,21 @@ class ConfigWinRMListenerPluginTests(unittest.TestCase):
         self._module_patcher.start()
         self._winreg_mock = self._moves_mock.winreg
 
-        winrmlistener = importlib.import_module('cloudbaseinit.plugins.'
+        with (mock.patch('cloudbaseinit.utils.windows.security.'
+            'WindowsSecurityUtils'),
+    mock.patch('cloudbaseinit.plugins.windows.winrmlistener.'
+                'ConfigWinRMListenerPlugin._configure_winrm_listener'),
+    mock.patch('cloudbaseinit.plugins.windows.winrmlistener.'
+                'ConfigWinRMListenerPlugin._check_uac_remote_restrictions'),
+    mock.patch('cloudbaseinit.plugins.windows.winrmlistener.'
+                'ConfigWinRMListenerPlugin._get_winrm_listeners_config'),
+    mock.patch('cloudbaseinit.osutils.factory.get_os_utils'),
+    mock.patch('cloudbaseinit.plugins.windows.winrmlistener.'
+                'ConfigWinRMListenerPlugin._check_winrm_service'),
+    mock.patch('cloudbaseinit.utils.windows.winrmconfig.WinRMConfig'),
+    mock.patch('cloudbaseinit.plugins.windows.winrmlistener'
+        '.ConfigWinRMListenerPlugin._create_self_signed_certificate')):
+            winrmlistener = importlib.import_module('cloudbaseinit.plugins.'
                                                 'windows.winrmlistener')
         self._winrmlistener = winrmlistener.ConfigWinRMListenerPlugin()
 
@@ -110,11 +124,10 @@ class ConfigWinRMListenerPluginTests(unittest.TestCase):
             (mock_security_utils.get_uac_remote_restrictions.
              assert_called_once_with())
             if disable_uac_remote_restrictions:
-                expected_set_token_calls = [mock.call(enable=True)]
+                expected_set_token_calls = [mock.call(enable=False)]
             else:
-                expected_set_token_calls = [mock.call(enable=False),
-                                            mock.call(enable=True)]
-            mock_security_utils.set_uac_remote_restrictions.has_calls(
+                expected_set_token_calls = [mock.call(enable=False)]
+            mock_security_utils.set_uac_remote_restrictions.assert_has_calls(
                 expected_set_token_calls)
 
     def test_check_uac_remote_restrictions(self):
@@ -242,7 +255,7 @@ class ConfigWinRMListenerPluginTests(unittest.TestCase):
                 "certificate_thumbprint": certificate_thumbprint
             }
             mock_get_winrm_listeners.return_value = [listener_config]
-        winrm_enable_basic_auth = mock.Mock(spec=bool)
+        winrm_enable_basic_auth = True
         with testutils.ConfPatcher('winrm_enable_basic_auth',
                                    winrm_enable_basic_auth):
             result = self._winrmlistener.execute(

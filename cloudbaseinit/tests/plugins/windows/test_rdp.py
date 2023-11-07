@@ -39,8 +39,10 @@ class RDPPluginTest(unittest.TestCase):
         )
         patcher.start()
         self.addCleanup(patcher.stop)
-        rdp = importlib.import_module(
-            "cloudbaseinit.plugins.windows.rdp")
+        with (mock.patch("cloudbaseinit.utils.windows.rdp."
+            "get_rdp_certificate_thumbprint")):
+            rdp = importlib.import_module(
+                "cloudbaseinit.plugins.windows.rdp")
         self.rdp_settings = rdp.RDPSettingsPlugin()
         self.rdp_post = rdp.RDPPostCertificateThumbprintPlugin()
         self.snatcher = testutils.LogSnatcher(MODPATH)

@@ -27,7 +27,6 @@ class TestWSMStorageManager(unittest.TestCase):
 
     def setUp(self):
         self._mock_ctypes = mock.MagicMock()
-        self._mock_ctypes.GetLastError = mock.MagicMock()
         self.mock_wmi = mock.MagicMock()
         self._moves_mock = mock.MagicMock()
         self._winreg_mock = self._moves_mock.winreg
@@ -44,15 +43,17 @@ class TestWSMStorageManager(unittest.TestCase):
         )
         patcher.start()
         self.addCleanup(patcher.stop)
-        with (mock.patch('ctypes.GetLastError', create=True),
-              mock.patch('ctypes.FormatError', create=True)):
-            wsm_store = importlib.import_module(
+        self._wsm_store = importlib.import_module(
                 "cloudbaseinit.utils.windows.storage.wsm_storage_manager")
 
-        wsm_store.WindowsError = testutils.FakeWindowsError
-        wsm_store.kernel32 = self._kernel32_mock
-        wsm_store.exception.ctypes = self._mock_ctypes
-        self.wsm = wsm_store.WSMStorageManager()
+        self._wsm_store.WindowsError = testutils.FakeWindowsError
+        self._wsm_store.kernel32 = self._kernel32_mock
+        self._wsm_store.exception.ctypes = mock.MagicMock()
+        self.wsm = self._wsm_store.WSMStorageManager()
+
+    def tearDown(self):
+        import ctypes
+        self._wsm_store.exception.ctypes = ctypes
 
     def test_init(self):
         self.mock_wmi.WMI.assert_called_once_with(
@@ -157,9 +158,7 @@ class TestWSMStorageManager(unittest.TestCase):
     def test_get_san_policy_not_found(self):
         self._test_get_san_policy(fail=True, errno=2)
 
-    @mock.patch('ctypes.GetLastError', create=True)
-    @mock.patch('ctypes.FormatError', create=True)
-    def _test_set_san_policy(self, mock1, mock2, policy=None, error=False,
+    def _test_set_san_policy(self, policy=None, error=False,
                              device_error=False):
         if policy != base.SAN_POLICY_ONLINE:
             self.assertRaises(
