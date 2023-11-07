@@ -44,11 +44,14 @@ class TestWSMStorageManager(unittest.TestCase):
         )
         patcher.start()
         self.addCleanup(patcher.stop)
-        wsm_store = importlib.import_module(
-            "cloudbaseinit.utils.windows.storage.wsm_storage_manager")
+        with (mock.patch('ctypes.GetLastError', create=True),
+              mock.patch('ctypes.FormatError', create=True)):
+            wsm_store = importlib.import_module(
+                "cloudbaseinit.utils.windows.storage.wsm_storage_manager")
 
         wsm_store.WindowsError = testutils.FakeWindowsError
         wsm_store.kernel32 = self._kernel32_mock
+        wsm_store.exception.ctypes = self._mock_ctypes
         self.wsm = wsm_store.WSMStorageManager()
 
     def test_init(self):
@@ -154,7 +157,9 @@ class TestWSMStorageManager(unittest.TestCase):
     def test_get_san_policy_not_found(self):
         self._test_get_san_policy(fail=True, errno=2)
 
-    def _test_set_san_policy(self, policy=None, error=False,
+    @mock.patch('ctypes.GetLastError', create=True)
+    @mock.patch('ctypes.FormatError', create=True)
+    def _test_set_san_policy(self, mock1, mock2, policy=None, error=False,
                              device_error=False):
         if policy != base.SAN_POLICY_ONLINE:
             self.assertRaises(

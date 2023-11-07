@@ -64,14 +64,11 @@ class WindowsCloudbaseInitException(CloudbaseInitException):
 
     def __init__(self, msg="%r", error_code=None):
         if error_code is None:
-            try:
-                error_code = ctypes.GetLastError()
-            except AttributeError:
-                pass
+            error_code = ctypes.GetLastError()
+        description = ctypes.FormatError(error_code)
         try:
-            description = ctypes.FormatError(error_code)
             formatted_msg = msg % description
-        except (AttributeError, TypeError):
+        except TypeError:
             formatted_msg = msg
         super(WindowsCloudbaseInitException, self).__init__(formatted_msg)
 
