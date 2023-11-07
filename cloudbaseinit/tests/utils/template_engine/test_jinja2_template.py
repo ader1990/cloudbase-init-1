@@ -15,10 +15,7 @@
 
 import ddt
 import unittest
-try:
-    import unittest.mock as mock
-except ImportError:
-    import mock
+import unittest.mock as mock
 
 from cloudbaseinit.utils.template_engine.jinja2_template import (
     Jinja2TemplateEngine)
@@ -31,7 +28,7 @@ class TestJinja2TemplateEngine(unittest.TestCase):
                 '.BaseTemplateEngine.remove_template_definition')
     def _test_jinja_render_template(self, mock_remove_header,
                                     fake_instance_data, expected_result,
-                                    fake_template = b'{{v1.local_hostname}}'):
+                                    fake_template=b'{{v1.local_hostname}}'):
 
         mock_remove_header.return_value = fake_template
 

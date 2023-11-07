@@ -16,10 +16,7 @@
 import functools
 import unittest
 
-try:
-    import unittest.mock as mock
-except ImportError:
-    import mock
+import unittest.mock as mock
 
 from cloudbaseinit import exception
 from cloudbaseinit.models import network as network_model
