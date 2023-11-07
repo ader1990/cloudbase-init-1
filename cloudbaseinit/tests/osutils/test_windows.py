@@ -113,6 +113,14 @@ class TestWindowsUtils(testutils.CloudbaseInitTestBase):
 
         self.snatcher = testutils.LogSnatcher(module_path)
 
+    def _patch(self, obj, method, *args, **kwargs):
+        """Patches the given method and returns its Mock."""
+        patcher = mock.patch.object(obj, method, *args, **kwargs)
+        mock_patched = patcher.start()
+        self.addCleanup(patcher.stop)
+
+        return mock_patched
+
     @mock.patch('cloudbaseinit.osutils.windows.privilege')
     def _test_reboot(self, mock_privilege_module, ret_value,
                      expected_ret_value=None):
@@ -1988,13 +1996,14 @@ class TestWindowsUtils(testutils.CloudbaseInitTestBase):
     def test_execute_powershell_script_sysnative_nano(self):
         self._test_execute_powershell_script(ret_val=True, nano=True)
 
-    @mock.patch('cloudbaseinit.utils.windows.network.get_adapter_addresses')
-    def test_get_dhcp_hosts_in_use(self, mock_get_adapter_addresses):
+    def test_get_dhcp_hosts_in_use(self):
         net_addr = {}
         net_addr["friendly_name"] = mock.sentinel.friendly_name
         net_addr["mac_address"] = mock.sentinel.mac_address
         net_addr["dhcp_server"] = mock.sentinel.dhcp_server
         net_addr["dhcp_enabled"] = True
+        mock_get_adapter_addresses = self._patch(self.windows_utils.network,
+                                                 'get_adapter_addresses')
         mock_get_adapter_addresses.return_value = [net_addr]
 
         response = self._winutils.get_dhcp_hosts_in_use()
@@ -2089,15 +2098,15 @@ class TestWindowsUtils(testutils.CloudbaseInitTestBase):
         self._test_set_ntp_client_config(sysnative=False,
                                          ret_val='fake return value')
 
-    @mock.patch("cloudbaseinit.utils.windows.network."
-                "get_adapter_addresses")
     def _test_get_network_adapter_name_by_mac_address(
-            self, mock_get_adapter_addresses,
+            self,
             no_adapters_found=False,
             multiple_adapters_found=False):
 
         mock.sentinel.mac_address = "aa:bb:cc:dd:ee:ff"
 
+        mock_get_adapter_addresses = self._patch(self.windows_utils.network,
+                                                 'get_adapter_addresses')
         if no_adapters_found:
             mock_get_adapter_addresses.return_value = []
         elif multiple_adapters_found:
@@ -2145,14 +2154,11 @@ class TestWindowsUtils(testutils.CloudbaseInitTestBase):
                 '.execute_process')
     @mock.patch('cloudbaseinit.osutils.windows.WindowsUtils'
                 '._get_system_dir')
-    @mock.patch("cloudbaseinit.utils.windows.network."
-                "get_adapter_addresses")
     @mock.patch('cloudbaseinit.osutils.windows.WindowsUtils'
                 '.check_os_version')
     @mock.patch('time.sleep')
     def _test_set_network_adapter_mtu(self, mock_sleep,
                                       mock_check_os_version,
-                                      mock_get_adapter_addresses,
                                       mock_get_system_dir,
                                       mock_execute_process,
                                       fail=False, os_version_ret=True,
@@ -2162,6 +2168,8 @@ class TestWindowsUtils(testutils.CloudbaseInitTestBase):
         index = 1
         mtu = "fake mtu"
         base_dir = "fake path"
+        mock_get_adapter_addresses = self._patch(self.windows_utils.network,
+                                                 'get_adapter_addresses')
         mock_check_os_version.return_value = os_version_ret
         mock_get_adapter_addresses.return_value = [mock.MagicMock()
                                                    for _ in range(3)]

@@ -34,6 +34,7 @@ class TestWSMStorageManager(unittest.TestCase):
         self._moves_mock = mock.MagicMock()
         self._winreg_mock = self._moves_mock.winreg
         self._kernel32_mock = mock.MagicMock()
+        self._mock_ctypes_exc = mock.MagicMock()
 
         patcher = mock.patch.dict(
             "sys.modules",
@@ -51,6 +52,7 @@ class TestWSMStorageManager(unittest.TestCase):
 
         wsm_store.WindowsError = testutils.FakeWindowsError
         wsm_store.kernel32 = self._kernel32_mock
+        wsm_store.exception.ctypes = self._mock_ctypes_exc
         self.wsm = wsm_store.WSMStorageManager()
 
     def test_init(self):
