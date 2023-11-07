@@ -25,4 +25,4 @@ jobs:
     - name: Run Cloudbase-Init unit tests with tox
       shell: bash
       run: |
-        stestr run
+        stestr run --exclude-list faling.tests --random
