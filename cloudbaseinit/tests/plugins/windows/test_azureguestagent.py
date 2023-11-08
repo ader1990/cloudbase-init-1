@@ -87,7 +87,7 @@ class AzureGuestAgentPluginTest(unittest.TestCase):
 
     def test_set_registry_vm_type(self):
         vm_type = mock.sentinel.vm
-        key_name = "SOFTWARE\\Microsoft\\Windows Azure"
+        key_name = 'SOFTWARE\\Microsoft\\Windows Azure'
 
         self._azureagentplugin._set_registry_vm_type(vm_type)
         key = self._winreg_mock.CreateKey.return_value.__enter__.return_value

@@ -24,7 +24,7 @@ from cloudbaseinit import exception
 from cloudbaseinit.utils.windows import privilege
 
 
-REG_TIME_ZONES = "Software\\Microsoft\\Windows NT\\CurrentVersion\\Time Zones"
+REG_TIME_ZONES = 'Software\\Microsoft\\Windows NT\\CurrentVersion\\Time Zones'
 NOT_FOUND = 2
 kernel32 = ctypes.windll.kernel32
 

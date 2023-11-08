@@ -35,14 +35,14 @@ RDAGENT_FILENAME = "WaAppAgent.exe"
 
 GUEST_AGENT_FILENAME = "Microsoft.Azure.Agent.Windows.exe"
 NANO_VMAGENT_FILENAME = "WaSvc.exe"
-GUEST_AGENT_EVENTNAME = "Global\AzureAgentStopRequest"
+GUEST_AGENT_EVENTNAME = 'Global\\AzureAgentStopRequest'
 
 LOGMAN_TRACE_NOT_RUNNING = 0x80300104
 LOGMAN_TRACE_NOT_FOUND = 0x80300002
 
 GUEST_AGENT_ROOT_PATH = "WindowsAzure"
 PACKAGES_ROOT_PATH = "Packages"
-GUEST_AGENT_SOURCE_PATH = '$$\\OEM\GuestAgent'
+GUEST_AGENT_SOURCE_PATH = '$$\\OEM\\GuestAgent'
 
 VM_AGENT_PACKAGE = "VmAgent_Nano.zip"
 
@@ -81,13 +81,13 @@ class AzureGuestAgentPlugin(base.BasePlugin):
     @staticmethod
     def _set_registry_vm_type(vm_type="IAAS"):
         with winreg.CreateKey(winreg.HKEY_LOCAL_MACHINE,
-                              "SOFTWARE\\Microsoft\\Windows Azure") as key:
+                              'SOFTWARE\\Microsoft\\Windows Azure') as key:
             winreg.SetValueEx(key, "VMType", 0, winreg.REG_SZ, vm_type)
 
     @staticmethod
     def _set_registry_ga_params(install_version, install_timestamp):
         with winreg.CreateKey(winreg.HKEY_LOCAL_MACHINE,
-                              "SOFTWARE\\Microsoft\\GuestAgent") as key:
+                              'SOFTWARE\\Microsoft\\GuestAgent') as key:
 
             install_version_str = "%s.%s.%s.%s" % install_version
             winreg.SetValueEx(

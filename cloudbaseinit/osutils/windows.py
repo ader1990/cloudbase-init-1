@@ -1664,7 +1664,7 @@ class WindowsUtils(base.BaseOSUtils):
         try:
             with winreg.OpenKey(
                     winreg.HKEY_LOCAL_MACHINE,
-                    "Software\\Microsoft\\Windows NT\\CurrentVersion\\Server\\"
+                    'Software\\Microsoft\\Windows NT\\CurrentVersion\\Server\\'
                     "ServerLevels") as key:
                 return winreg.QueryValueEx(key, server_level)[0] == 1
         except WindowsError as ex:

@@ -32,7 +32,7 @@ class ClassloaderTest(unittest.TestCase):
     def _test_get_config_drive_manager(self, mock_load_class, platform):
         sys.platform = platform
 
-        if platform is not "win32":
+        if platform != "win32":
             self.assertRaises(NotImplementedError,
                               factory.get_config_drive_manager)
 

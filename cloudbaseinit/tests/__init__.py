@@ -14,9 +14,14 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
+# PYTHON SOFTWARE FOUNDATION LICENSE VERSION 2
+# https://github.com/python/cpython/blob/3.10/LICENSE
+# _dot_lookup, _importer, _get_target
+
 from unittest import mock
 
 
+# https://github.com/python/cpython/blob/3.10/Lib/unittest/mock.py#L1246
 def _dot_lookup(thing, comp, import_path):
     try:
         return getattr(thing, comp)
@@ -25,6 +30,7 @@ def _dot_lookup(thing, comp, import_path):
         return getattr(thing, comp)
 
 
+# https://github.com/python/cpython/blob/3.10/Lib/unittest/mock.py#L1254
 def _importer(target):
     components = target.split('.')
     import_path = components.pop(0)
@@ -36,6 +42,7 @@ def _importer(target):
     return thing
 
 
+# https://github.com/python/cpython/blob/3.10/Lib/unittest/mock.py#L1612
 def _get_target(target):
     try:
         target, attribute = target.rsplit('.', 1)
@@ -46,4 +53,8 @@ def _get_target(target):
     return getter, attribute
 
 
+# Note(avladu): use the py 3.10 and lower importer for mock
+# https://github.com/python/cpython/blob/3.10/Lib/unittest/mock.py#L1246
+# Otherwise, the unit tests that use importlib with context are not
+# running in an isolated manner, leading to various transient failures.
 mock._get_target = _get_target

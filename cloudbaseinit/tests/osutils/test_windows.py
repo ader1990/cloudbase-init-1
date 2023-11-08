@@ -362,7 +362,7 @@ class TestWindowsUtils(testutils.CloudbaseInitTestBase):
 
         is_in_alias = ret_value != self._winutils.ERROR_MEMBER_IN_ALIAS
 
-        if ret_value is not 0 and is_in_alias:
+        if ret_value != 0 and is_in_alias:
             self.assertRaises(
                 exception.CloudbaseInitException,
                 self._winutils.add_user_to_local_group,
@@ -1633,7 +1633,7 @@ class TestWindowsUtils(testutils.CloudbaseInitTestBase):
                 self._ctypes_mock.sizeof.return_value,
                 self._ctypes_mock.byref.return_value, None)
 
-            self.assertEqual(["\\\\.\PHYSICALDRIVE1"], response)
+            self.assertEqual(['\\\\.\\PHYSICALDRIVE1'], response)
 
             mock_setupapi.SetupDiDestroyDeviceInfoList.assert_called_once_with(
                 handle_disks)

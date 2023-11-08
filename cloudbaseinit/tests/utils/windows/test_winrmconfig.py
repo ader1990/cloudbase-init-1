@@ -81,16 +81,16 @@ class WinRMConfigTests(unittest.TestCase):
         else:
             mock_fromstring.assert_called_once_with(data_xml)
             mock_get_node_tag.assert_called_once_with(tag)
-            if tag is "ListeningOn":
+            if tag == "ListeningOn":
                 self.assertEqual({'ListeningOn': ['Fake']}, response)
-            elif tag is "Enabled":
-                if text is 'true':
+            elif tag == "Enabled":
+                if text == 'true':
                     self.assertEqual({'ListeningOn': [],
                                       'Enabled': True}, response)
                 else:
                     self.assertEqual({'ListeningOn': [],
                                       'Enabled': False}, response)
-            elif tag is 'Port':
+            elif tag == 'Port':
                 self.assertEqual({'ListeningOn': [],
                                   'Port': int(text)}, response)
             else:
@@ -139,8 +139,8 @@ class WinRMConfigTests(unittest.TestCase):
         else:
             mock_fromstring.assert_called_once_with(data_xml)
             mock_get_node_tag.assert_called_once_with(tag)
-            if tag is "Enabled":
-                if text is 'true':
+            if tag == "Enabled":
+                if text == 'true':
                     self.assertEqual({'Enabled': True}, response)
                 else:
                     self.assertEqual({'Enabled': False}, response)
