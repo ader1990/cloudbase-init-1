@@ -112,12 +112,8 @@ class ConfigWinRMListenerPluginTests(unittest.TestCase):
                 [mock.call(6, 0), mock.call(6, 2)])
             (mock_security_utils.get_uac_remote_restrictions.
              assert_called_once_with())
-            if disable_uac_remote_restrictions:
-                expected_set_token_calls = [mock.call(enable=True)]
-            else:
-                expected_set_token_calls = [mock.call(enable=False),
-                                            mock.call(enable=True)]
-            mock_security_utils.set_uac_remote_restrictions.has_calls(
+            expected_set_token_calls = [mock.call(enable=False)]
+            mock_security_utils.set_uac_remote_restrictions.assert_has_calls(
                 expected_set_token_calls)
 
     def test_check_uac_remote_restrictions(self):
