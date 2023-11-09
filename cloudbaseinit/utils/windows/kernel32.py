@@ -38,8 +38,8 @@ class GUID(ctypes.Structure):
         ("data3", wintypes.WORD),
         ("data4", wintypes.BYTE * 8)]
 
-    def __init__(self, l, w1, w2, b1, b2, b3, b4, b5, b6, b7, b8):
-        self.data1 = l
+    def __init__(self, l1, w1, w2, b1, b2, b3, b4, b5, b6, b7, b8):
+        self.data1 = l1
         self.data2 = w1
         self.data3 = w2
         self.data4[0] = b1

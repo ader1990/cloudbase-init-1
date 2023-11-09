@@ -35,14 +35,14 @@ RDAGENT_FILENAME = "WaAppAgent.exe"
 
 GUEST_AGENT_FILENAME = "Microsoft.Azure.Agent.Windows.exe"
 NANO_VMAGENT_FILENAME = "WaSvc.exe"
-GUEST_AGENT_EVENTNAME = "Global\AzureAgentStopRequest"
+GUEST_AGENT_EVENTNAME = 'Global\\AzureAgentStopRequest'
 
 LOGMAN_TRACE_NOT_RUNNING = 0x80300104
 LOGMAN_TRACE_NOT_FOUND = 0x80300002
 
 GUEST_AGENT_ROOT_PATH = "WindowsAzure"
 PACKAGES_ROOT_PATH = "Packages"
-GUEST_AGENT_SOURCE_PATH = '$$\\OEM\GuestAgent'
+GUEST_AGENT_SOURCE_PATH = '$$\\OEM\\GuestAgent'
 
 VM_AGENT_PACKAGE = "VmAgent_Nano.zip"
 

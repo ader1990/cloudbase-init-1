@@ -292,59 +292,59 @@ class MaaSHttpServiceTest(unittest.TestCase):
         network_details = self._maasservice.get_network_details_v2()
 
         self.assertEqual(1, len([
-            l for l in network_details.links if
-            l.type == network_model.LINK_TYPE_PHYSICAL and
-            l.id == mock.sentinel.link_id1 and
-            l.name == mock.sentinel.link_name1 and
-            l.enabled is True and
-            l.mac_address == mock.sentinel.link_mac1 and
-            l.mtu == mock.sentinel.link_mtu1]))
+            l1 for l1 in network_details.links if
+            l1.type == network_model.LINK_TYPE_PHYSICAL and
+            l1.id == mock.sentinel.link_id1 and
+            l1.name == mock.sentinel.link_name1 and
+            l1.enabled is True and
+            l1.mac_address == mock.sentinel.link_mac1 and
+            l1.mtu == mock.sentinel.link_mtu1]))
 
         self.assertEqual(1, len([
-            l for l in network_details.links if
-            l.type == network_model.LINK_TYPE_PHYSICAL and
-            l.id == mock.sentinel.link_id2 and
-            l.name == mock.sentinel.link_name2 and
-            l.enabled is True and
-            l.mac_address == mock.sentinel.link_mac2 and
-            l.mtu == mock.sentinel.link_mtu2]))
+            l2 for l2 in network_details.links if
+            l2.type == network_model.LINK_TYPE_PHYSICAL and
+            l2.id == mock.sentinel.link_id2 and
+            l2.name == mock.sentinel.link_name2 and
+            l2.enabled is True and
+            l2.mac_address == mock.sentinel.link_mac2 and
+            l2.mtu == mock.sentinel.link_mtu2]))
 
         # Disconnected network adapter, ensure it's not enabled
         self.assertEqual(1, len([
-            l for l in network_details.links if
-            l.type == network_model.LINK_TYPE_PHYSICAL and
-            l.id == mock.sentinel.link_id3 and
-            l.name == mock.sentinel.link_name3 and
-            l.enabled is False and
-            l.mac_address == mock.sentinel.link_mac3 and
-            l.mtu == mock.sentinel.link_mtu3]))
+            l3 for l3 in network_details.links if
+            l3.type == network_model.LINK_TYPE_PHYSICAL and
+            l3.id == mock.sentinel.link_id3 and
+            l3.name == mock.sentinel.link_name3 and
+            l3.enabled is False and
+            l3.mac_address == mock.sentinel.link_mac3 and
+            l3.mtu == mock.sentinel.link_mtu3]))
 
         self.assertEqual(1, len([
-            l for l in network_details.links if
-            l.type == network_model.LINK_TYPE_BOND and
-            l.id == mock.sentinel.bond_id1 and
-            l.enabled is True and
-            l.name == mock.sentinel.bond_name1 and
-            l.mtu == mock.sentinel.bond_mtu1 and
-            l.mac_address == mock.sentinel.bond_mac1 and
-            l.vlan_link is None and
-            l.vlan_id is None and
-            l.bond.type == network_model.BOND_TYPE_BALANCE_ALB and
-            l.bond.members == [
+            l4 for l4 in network_details.links if
+            l4.type == network_model.LINK_TYPE_BOND and
+            l4.id == mock.sentinel.bond_id1 and
+            l4.enabled is True and
+            l4.name == mock.sentinel.bond_name1 and
+            l4.mtu == mock.sentinel.bond_mtu1 and
+            l4.mac_address == mock.sentinel.bond_mac1 and
+            l4.vlan_link is None and
+            l4.vlan_id is None and
+            l4.bond.type == network_model.BOND_TYPE_BALANCE_ALB and
+            l4.bond.members == [
                 mock.sentinel.link_id1, mock.sentinel.link_id2] and
-            l.bond.lb_algorithm == network_model.BOND_LB_ALGO_L2 and
-            l.bond.lacp_rate == network_model.BOND_LACP_RATE_FAST]))
+            l4.bond.lb_algorithm == network_model.BOND_LB_ALGO_L2 and
+            l4.bond.lacp_rate == network_model.BOND_LACP_RATE_FAST]))
 
         self.assertEqual(1, len([
-            l for l in network_details.links if
-            l.type == network_model.LINK_TYPE_VLAN and
-            l.id == mock.sentinel.vlan_link_id1 and
-            l.name == mock.sentinel.vlan_name1 and
-            l.enabled is True and
-            l.mac_address is None and
-            l.mtu == mock.sentinel.vlan_mtu1 and
-            l.vlan_link == mock.sentinel.bond_id1 and
-            l.vlan_id == mock.sentinel.vlan_id1]))
+            l5 for l5 in network_details.links if
+            l5.type == network_model.LINK_TYPE_VLAN and
+            l5.id == mock.sentinel.vlan_link_id1 and
+            l5.name == mock.sentinel.vlan_name1 and
+            l5.enabled is True and
+            l5.mac_address is None and
+            l5.mtu == mock.sentinel.vlan_mtu1 and
+            l5.vlan_link == mock.sentinel.bond_id1 and
+            l5.vlan_id == mock.sentinel.vlan_id1]))
 
         self.assertEqual(3, len(network_details.networks))
 

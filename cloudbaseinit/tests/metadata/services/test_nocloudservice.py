@@ -52,7 +52,7 @@ class TestNoCloudNetworkConfigV1Parser(unittest.TestCase):
         with self.snatcher:
             result = self._parser.parse(serialization.parse_json_yaml(input))
 
-        self.assertEqual(True, expected_result[0] in self.snatcher.output[0])
+        self.assertIn(expected_result[0], self.snatcher.output[0])
         self.assertEqual(result, expected_result[1])
 
     def test_network_details_v2(self):

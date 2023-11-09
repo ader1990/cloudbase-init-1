@@ -36,7 +36,7 @@ class GUID(ctypes.Structure):
         ("data4", ctypes.c_byte * 8)]
 
     def __eq__(self, other):
-        if type(other) != GUID:
+        if not isinstance(other, GUID):
             return False
         return not msvcrt.memcmp(ctypes.addressof(self),
                                  ctypes.addressof(other),

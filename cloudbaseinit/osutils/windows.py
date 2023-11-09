@@ -1056,7 +1056,7 @@ class WindowsUtils(base.BaseOSUtils):
 
         with winreg.CreateKey(winreg.HKEY_LOCAL_MACHINE,
                               key_name) as key:
-            if type(value) == int:
+            if isinstance(value, int):
                 regtype = winreg.REG_DWORD
             else:
                 regtype = winreg.REG_SZ
