@@ -265,7 +265,7 @@ class TestNoCloudConfigDriveService(unittest.TestCase):
             mock_get_cache_data.return_value = input
         with self.snatcher:
             result = self._config_drive.get_network_details_v2()
-        self.assertEqual(True, expected_result[0] in self.snatcher.output[0])
+        self.assertIn(expected_result[0], self.snatcher.output[0])
         self.assertEqual(result, None)
 
         mock_get_cache_data.assert_called_with(

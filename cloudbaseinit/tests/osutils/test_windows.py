@@ -898,7 +898,7 @@ class TestWindowsUtils(testutils.CloudbaseInitTestBase):
             self._winreg_mock.HKEY_LOCAL_MACHINE, key_name)
         mock_get_config_key_name.assert_called_with(self._SECTION)
 
-        if type(value) == int:
+        if isinstance(value, int):
             self._winreg_mock.SetValueEx.assert_called_with(
                 key, self._CONFIG_NAME, 0, self._winreg_mock.REG_DWORD, value)
 
@@ -918,7 +918,7 @@ class TestWindowsUtils(testutils.CloudbaseInitTestBase):
         key_name = self._winutils._config_key + self._SECTION + '\\'
         key_name += self._CONFIG_NAME
 
-        if type(value) == int:
+        if isinstance(value, int):
             regtype = self._winreg_mock.REG_DWORD
         else:
             regtype = self._winreg_mock.REG_SZ

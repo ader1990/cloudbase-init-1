@@ -131,7 +131,7 @@ class OvfServiceTest(unittest.TestCase):
             self._get_test_properties('public-keys')
         res = self._ovfservice.get_public_keys()
         mock_get_ovf_env.assert_called_once_with()
-        assert type(res) == list
+        self.assertIsInstance(res, list)
         assert len(res) == 1
         self.assertEqual(res[0], str(id(mock.sentinel.value)))
 

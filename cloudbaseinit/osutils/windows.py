@@ -1551,7 +1551,7 @@ class WindowsUtils(base.BaseOSUtils):
                             'DeviceIoControl failed: %r')
 
                     physical_disks.append(
-                        r"\\.\PHYSICALDRIVE%d" % sdn.DeviceNumber)
+                        r'\\.\PHYSICALDRIVE%d' % sdn.DeviceNumber)
                 finally:
                     msvcrt.free(pdidd)
                     if handle_disk != self.INVALID_HANDLE_VALUE:

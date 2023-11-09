@@ -44,4 +44,4 @@ class TestCryptManager(unittest.TestCase):
             ssh_pub_key, password)
 
         self.assertTrue(len(response) > 0)
-        self.assertTrue(isinstance(response, bytes))
+        self.assertIsInstance(response, bytes)

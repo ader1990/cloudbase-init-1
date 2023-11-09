@@ -303,12 +303,12 @@ class TestDisk(BaseTestDevice, testutils.CloudbaseInitTestBase):
         indexes = [0, 1, 2]
         mock_get_layout.return_value = layout
         mock_get_partition_indexes.return_value = indexes
-        self._disk_class._path = r"\\?\GLOBALROOT\Device\Harddisk0"
+        self._disk_class._path = r'\\?\GLOBALROOT\Device\Harddisk0'
 
         response = self._disk_class.partitions()
         mock_get_layout.assert_called_once_with()
         mock_get_partition_indexes.assert_called_once_with(layout)
-        paths = [r"\\?\GLOBALROOT\Device\Harddisk{}\Partition{}".format(
+        paths = [r'\\?\GLOBALROOT\Device\Harddisk{}\Partition{}'.format(
                  0, idx + 1) for idx in indexes]
         calls = [mock.call(path, size) for path in paths]
         mock_partition.assert_has_calls(calls)
