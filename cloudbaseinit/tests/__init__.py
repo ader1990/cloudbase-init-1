@@ -15,6 +15,7 @@
 #    under the License.
 
 from unittest import mock
+
 from mock import mock as mock_base
 
 # Note(avladu): use the original importer for mock
