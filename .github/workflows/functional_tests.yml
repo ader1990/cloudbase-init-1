@@ -3,8 +3,8 @@ name: Cloudbase-Init functional tests
 on: [push, pull_request]
 
 env:
-  UPPER_CONSTRAINTS: ["https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt"]
-  TEST_RESOURCES: ["https://github.com/ader1990/cloudbase-init-test-resources-1"]
+  UPPER_CONSTRAINTS: "https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt"
+  TEST_RESOURCES: "https://github.com/ader1990/cloudbase-init-test-resources-1"
 
 jobs:
   build-windows-functional:
