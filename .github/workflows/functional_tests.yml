@@ -10,6 +10,8 @@ jobs:
         python-version: [ "3.11"]
         architecture: ["x64"]
         cloud: ["empty"]
+        upper-constraints: ["https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt"]
+        test-resources: ["https://github.com/ader1990/cloudbase-init-test-resources-1"]
 
     steps:
     - name: Checkout cloudbase-init repository
@@ -22,18 +24,18 @@ jobs:
     - name: Download external dependencies
       shell: cmd
       run: |
-        git clone "https://github.com/ader1990/cloudbase-init-test-resources-1" cbs-test-res
+        git clone ${{ matrix.test-resources }} test-resources
         python -W ignore -m pip install --upgrade pip
     - name: Install Cloudbase-Init
       shell: cmd
       run: |
-        python -W ignore -m pip install -c https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt -U --force-reinstall -r requirements.txt
+        python -W ignore -m pip install -c ${{ matrix.upper-constraints }} -U --force-reinstall -r requirements.txt
         python -W ignore -m pip install .
     - name: Run Cloudbase-Init functional tests
       shell: powershell
       run: |
         try {
-            & cmd /c "cloudbase-init.exe --noreset_service_password --config-file ./cbs-test-res/${{ matrix.cloud }}/cloudbase-init.conf 2>&1" | Tee-Object -FilePath cloudbase-init.log
+            & cmd /c "cloudbase-init.exe --noreset_service_password --config-file ./test-resources/${{ matrix.cloud }}/cloudbase-init.conf 2>&1" | Tee-Object -FilePath cloudbase-init.log
         } catch {}
         $errors = $(cat ./cloudbase-init.log | Where-Object {$_ -like "*error*"})
         $pluginExecution = $(cat ./cloudbase-init.log | Where-Object {$_ -like "*Plugins execution done*"})
