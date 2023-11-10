@@ -3,7 +3,7 @@ name: Cloudbase-Init unit tests
 on: [pull_request]
 
 jobs:
-  build:
+  build-linux:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
