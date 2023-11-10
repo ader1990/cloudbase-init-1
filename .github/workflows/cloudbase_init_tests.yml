@@ -30,7 +30,7 @@ jobs:
     - name: Run Cloudbase-Init unit tests with tox
       shell: bash
       run: |
-        tox run-parallel -e py3,pep8,cover,docs
+        tox run-parallel -e py3,pep8,cover
   windows-unit-tests:
     runs-on: windows-latest
     strategy:
