@@ -30,6 +30,13 @@ jobs:
         python -W ignore -m pip install -c https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt -U --force-reinstall -r requirements.txt
         python -W ignore -m pip install .
     - name: Run Cloudbase-Init functional tests
-      shell: cmd
+      shell: powershell
       run: |
-        cloudbase-init.exe --noreset_service_password --config-file cbs-test-res/${{ matrix.cloud }}/cloudbase-init.conf
+        try {
+            & cmd /c "cloudbase-init.exe --noreset_service_password --config-file ./cbs-test-res/${{ matrix.cloud }}/cloudbase-init.conf 2>&1" | Tee-Object -FilePath cloudbase-init.log
+        } catch {}
+        $errors = $(cat ./cloudbase-init.log | Where-Object {$_ -like "*error*"})
+        $pluginExecution = $(cat ./cloudbase-init.log | Where-Object {$_ -like "*Plugins execution done*"})
+        if ($errors -or !$pluginExecution) {
+            exit 1
+        }
