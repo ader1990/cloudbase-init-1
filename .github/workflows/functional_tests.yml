@@ -9,7 +9,7 @@ jobs:
       matrix:
         python-version: [ "3.11"]
         architecture: ["x64"]
-        cloud: [empty]
+        cloud: ["empty"]
 
     steps:
     - name: Checkout cloudbase-init repository
@@ -29,4 +29,4 @@ jobs:
       shell: cmd
       run: |
         python -W ignore -m pip install .
-        cloudbase-init.exe --noreset_service_password --config-file cbs-test-res/%cloud%/cloudbase-init.conf 2>&1
+        cloudbase-init.exe --noreset_service_password --config-file cbs-test-res/{{ matrix.cloud }}/cloudbase-init.conf
