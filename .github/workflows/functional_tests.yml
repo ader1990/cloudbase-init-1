@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         python-version: [ "3.11"]
-        architecture: ["x64"]
+        architecture: ["x64", "x86"]
         cloud: ["empty"]
         upper-constraints: ["https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt"]
         test-resources: ["https://github.com/ader1990/cloudbase-init-test-resources-1"]
