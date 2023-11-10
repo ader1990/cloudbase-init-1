@@ -24,9 +24,12 @@ jobs:
       run: |
         git clone "https://github.com/ader1990/cloudbase-init-test-resources-1" cbs-test-res
         python -W ignore -m pip install --upgrade pip
+    - name: Install Cloudbase-Init
+      shell: cmd
+      run: |
         python -W ignore -m pip install -c https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt -U --force-reinstall -r requirements.txt
+        python -W ignore -m pip install .
     - name: Run Cloudbase-Init functional tests
       shell: cmd
       run: |
-        python -W ignore -m pip install .
-        cloudbase-init.exe --noreset_service_password --config-file cbs-test-res/{{ matrix.cloud }}/cloudbase-init.conf
+        cloudbase-init.exe --noreset_service_password --config-file cbs-test-res/${{ matrix.cloud }}/cloudbase-init.conf
