@@ -1,0 +1,32 @@
+name: Cloudbase-Init functional tests
+
+on: [push, pull_request]
+
+jobs:
+  build-windows-functional:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        python-version: [ "3.11"]
+        architecture: ["x64"]
+        cloud: [empty]
+
+    steps:
+    - name: Checkout cloudbase-init repository
+      uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+        architecture: ${{ matrix.architecture }}
+    - name: Download external dependencies
+      shell: cmd
+      run: |
+        git clone "https://github.com/ader1990/cloudbase-init-test-resources-1" cbs-test-res
+        python -W ignore -m pip install --upgrade pip
+        python -W ignore -m pip install -c https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt -U --force-reinstall -r requirements.txt
+    - name: Run Cloudbase-Init functional tests
+      shell: cmd
+      run: |
+        python -W ignore -m pip install .
+        cloudbase-init.exe --noreset_service_password --config-file cbs-test-res/%cloud%/cloudbase-init.conf 2>&1
