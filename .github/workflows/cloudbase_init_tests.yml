@@ -62,7 +62,7 @@ jobs:
       matrix:
         python-version: [ "3.11"]
         architecture: ["x64", "x86"]
-        cloud: ["empty"]
+        cloud: ["empty", "openstack"]
 
     steps:
     - name: Checkout cloudbase-init repository
@@ -86,6 +86,7 @@ jobs:
       shell: powershell
       run: |
         Install-Module -Force -AllowClobber -Confirm:$false "Pester"
+        $ENV:CLOUD = "${{ matrix.cloud }}"
         Invoke-Pester test-resources/functional-tests -Output Detailed -FullNameFilter TestVerifyBeforeAllPlugins
         try {
             & cmd /c "cloudbase-init.exe --noreset_service_password --config-file ./test-resources/${{ matrix.cloud }}/cloudbase-init.conf 2>&1" | Tee-Object -FilePath cloudbase-init.log
