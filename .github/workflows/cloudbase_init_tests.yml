@@ -2,8 +2,8 @@ name: Cloudbase-Init tests
 
 env:
   UPPER_CONSTRAINTS: "https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt"
-  TEST_RESOURCES: "https://github.com/cloudbase/cloudbase-init-test-resources"
-  TEST_RESOURCES_BRANCH: "master"
+  TEST_RESOURCES: "https://github.com/ader1990/cloudbase-init-test-resources-1"
+  TEST_RESOURCES_BRANCH: "add_pester_functional_tests_v03"
 
 on: [push, pull_request]
 
