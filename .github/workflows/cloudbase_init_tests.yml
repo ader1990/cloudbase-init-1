@@ -3,7 +3,7 @@ name: Cloudbase-Init tests
 env:
   UPPER_CONSTRAINTS: "https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt"
   TEST_RESOURCES: "https://github.com/ader1990/cloudbase-init-test-resources-1"
-  TEST_RESOURCES_BRANCH: "add_pester_functional_tests_v03"
+  TEST_RESOURCES_BRANCH: "add_pester_functional_tests_v04"
 
 on: [push, pull_request]
 
@@ -61,7 +61,7 @@ jobs:
       fail-fast: false
       matrix:
         python-version: [ "3.11"]
-        architecture: ["x64"]
+        architecture: ["x64", "x86"]
         cloud: ["empty", "openstack"]
 
     steps:
