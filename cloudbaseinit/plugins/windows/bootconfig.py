@@ -24,6 +24,7 @@ LOG = oslo_logging.getLogger(__name__)
 
 
 class BootStatusPolicyPlugin(base.BasePlugin):
+    execution_stage = base.PLUGIN_STAGE_PRE_NETWORKING
 
     def execute(self, service, shared_data):
         if CONF.bcd_boot_status_policy:
@@ -38,6 +39,7 @@ class BootStatusPolicyPlugin(base.BasePlugin):
 
 
 class BCDConfigPlugin(base.BasePlugin):
+    execution_stage = base.PLUGIN_STAGE_PRE_NETWORKING
 
     @staticmethod
     def _set_unique_disk_id(phys_disk_path):

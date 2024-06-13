@@ -463,7 +463,7 @@ BCD store.
 
 Config options:
 
-    * set_unique_boot_disk_id (bool: False)
+    * set_unique_boot_disk_id (bool: True)
     * bcd_enable_auto_recovery (bool: False)
 
 
