@@ -125,6 +125,7 @@ class VMwareGuestInfoService(base.BaseMetadataService):
             self._meta_data = {}
 
         self._user_data = self._get_guest_data('userdata')
+        LOG.debug(" user data '%s' ", self._user_data)
 
         return True if self._meta_data or self._user_data else None
 
