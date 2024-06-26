@@ -3,7 +3,7 @@ name: Cloudbase-Init tests
 env:
   UPPER_CONSTRAINTS: "https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt"
   TEST_RESOURCES: "https://github.com/ader1990/cloudbase-init-test-resources-1"
-  TEST_RESOURCES_BRANCH: "nocloud_network_set"
+  TEST_RESOURCES_BRANCH: "vmwareguest_network_config_test"
 
 on: [push, pull_request]
 
@@ -62,7 +62,7 @@ jobs:
       matrix:
         python-version: [ "3.12"]
         architecture: ["x64", "x86"]
-        cloud: ["empty", "nocloud"]
+        cloud: ["vmwareguest"]
 
     steps:
     - name: Checkout cloudbase-init repository
