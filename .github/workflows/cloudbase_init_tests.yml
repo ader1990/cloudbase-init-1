@@ -2,8 +2,8 @@ name: Cloudbase-Init tests
 
 env:
   UPPER_CONSTRAINTS: "https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt"
-  TEST_RESOURCES: "https://github.com/cloudbase/cloudbase-init-test-resources"
-  TEST_RESOURCES_BRANCH: "master"
+  TEST_RESOURCES: "https://github.com/ader1990/cloudbase-init-test-resources-1"
+  TEST_RESOURCES_BRANCH: "openstack_add_openvpn_tap"
 
 on: [push, pull_request]
 
@@ -36,7 +36,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        python-version: [ "3.8", "3.12"]
+        python-version: [ "3.12"]
         architecture: ["x64", "x86"]
 
     steps:
