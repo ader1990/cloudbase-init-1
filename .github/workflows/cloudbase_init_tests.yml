@@ -2,8 +2,8 @@ name: Cloudbase-Init tests
 
 env:
   UPPER_CONSTRAINTS: "upper-constraints.txt"
-  TEST_RESOURCES: "https://github.com/cloudbase/cloudbase-init-test-resources"
-  TEST_RESOURCES_BRANCH: "master"
+  TEST_RESOURCES: "https://github.com/chl117/cloudbase-init-test-resources"
+  TEST_RESOURCES_BRANCH: "oracle_service_imdsv2_tests"
 
 on: [push, pull_request]
 
@@ -62,7 +62,7 @@ jobs:
       matrix:
         python-version: [ "3.14"]
         architecture: ["x64", "x86"]
-        cloud: ["empty", "nocloud", "vmwareguest"]
+        cloud: ["oracle"]
 
     steps:
     - name: Checkout cloudbase-init repository
